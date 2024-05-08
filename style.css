@@ -1,0 +1,5 @@
+.linkedlist, .stack, .Sq, .Cq, .Dq, .sel, .ins, .bub, .ls, .bs{
+    color: #000;
+    background: #fff;
+    visibility: hidden;
+}
