@@ -52,6 +52,312 @@ const copyTOKEN = async () => {
   }
 };
 
+const copyPIPE = async () => {
+  try {
+    await navigator.clipboard.writeText(PIPE);
+  } catch (error) {
+    console.error("Failed to copy to clipboard:", error);
+  }
+};
+const copyCHARCNT = async () => {
+  try {
+    await navigator.clipboard.writeText(CHARCNT);
+  } catch (error) {
+    console.error("Failed to copy to clipboard:", error);
+  }
+};
+const copyBIT = async () => {
+  try {
+    await navigator.clipboard.writeText(BIT);
+  } catch (error) {
+    console.error("Failed to copy to clipboard:", error);
+  }
+};
+const copyFRAMES = async () => {
+  try {
+    await navigator.clipboard.writeText(FRAMES);
+  } catch (error) {
+    console.error("Failed to copy to clipboard:", error);
+  }
+};
+const copyBYTESTF = async () => {
+  try {
+    await navigator.clipboard.writeText(BYTESTF);
+  } catch (error) {
+    console.error("Failed to copy to clipboard:", error);
+  }
+};
+const copyBITSTF = async () => {
+  try {
+    await navigator.clipboard.writeText(BITSTF);
+  } catch (error) {
+    console.error("Failed to copy to clipboard:", error);
+  }
+};
+
+const BITSTF = `
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+	int i=0,j=0,l=0;
+	char data[1024];
+	char frame[1024]="";
+	printf("\\n Enter the Bit Stream : ");
+	scanf("%s",data);
+
+int size = strlen(data);
+for(i,j;i<size;i++,j++)
+{
+	if(i==0 || i%4==0)
+	{
+		frame[j]="#";
+		j++;	
+	}
+	frame[j]=data[i];
+}
+
+for(l;l<strlen(frame);l++)
+{
+	printf("%c",frame[l]);
+}
+
+return 0;
+}
+`;
+
+const BYTESTF = `
+#include<stdio.h>
+#include<unistd.h>
+#include<string.h>
+#include<fcntl.h>
+ //for exa: dlestkhelldleo PUdleetx
+void main()
+{
+	char str[1024];
+	char str1[1024];
+	printf("Enter the String:");
+	scanf("%s",str);
+	
+	int i,j;
+	char *start="dlestx";
+	char *end="dleetx"; 
+	char *startend="dle";
+
+	int l=strlen(str);
+	int l1=strlen(start);
+	int incharpos;
+	char inchar;
+	printf("Your String is : %s ",str);
+	printf("\\n");
+	start:
+		printf("Enter the  position that you want to stuff character:");
+		scanf("%d",&incharpos);
+	if(incharpos>=l)
+	{
+	  printf("Sorry your enter position is grater than lenght of Input String \\n");
+	  goto start;
+	}
+	printf("Enter the Character that you want to stuff:");
+	scanf(" %c",&inchar);
+	int count=0;
+	for(i=0;i<l1;i++)
+	{
+	  str1[i]=start[i];
+	  count++;
+	}
+	for(i=0;i<l;i++)
+	{
+		
+	   if(i==incharpos)
+ 	   {
+
+		for(j=0;j<strlen(startend);j++)
+		{
+			str1[count]=startend[j];
+			count++;
+		}
+		str1[count]=inchar;
+		count++;
+		for(j=0;j<strlen(startend);j++)
+		{
+			str1[count]=startend[j];
+			count++;
+		}
+	 	
+	   }		
+	   str1[count]=str[i];  
+	  count++;  
+	  
+	}
+	
+	for(j=0;j<l1;j++)
+	{
+	  str1[count]=end[j];
+	  count++;
+	}
+	
+	printf("%s",str1);
+	
+		
+	printf("\\n");
+
+}
+`;
+
+
+const FRAMES =`
+#include<stdio.h>
+#include<string.h>
+#include<unistd.h>
+#include<sys/syscall.h>
+#include<fcntl.h>
+int  main()
+{
+	printf("\\n Enter the Message That You want to sent.....:)\\n");
+	char str[1024];
+	char smsg[1024];
+	char readData[1024];
+	scanf("%s",str);
+	int msglen=strlen(str);
+	int l=4;
+	int i,j;
+	int count=0;
+	int fds[2];
+	for(i=0;i<msglen;i++)
+	{
+		for(j=0;j<l;j++)
+		{
+		  smsg[count]=str[i];
+		  i++;
+		  count++;
+		}
+		i--;
+		smsg[count]='#';
+		count++;
+	}
+
+	for(i=0;i<strlen(smsg);i++)
+	{
+	  printf("%c",smsg[i]);
+	}
+
+	int fd=creat("test1.txt",777);
+	
+	if(fd<0)
+	{
+	  printf("file already created");
+	}
+	else
+	{
+		write(fd,smsg,strlen(smsg));
+		
+		read(fd,readData,sizeof(smsg));
+	}
+
+	return 0;
+}
+`;
+
+const BIT = `
+//DCN LAB Program: Write a C Program to implement BitCount Method.
+
+#include "stdio.h"
+#include "string.h"
+
+int main()
+{
+    unsigned int cnt0=0, cnt1=0, iCnt=0, size;
+    char stream[256];
+    
+printf("Enter BitStream:");
+scanf("%s",stream);
+size = strlen(stream);
+for(int i=0; i<size; i++)
+{
+   if(stream[i] == '1')
+   {
+        cnt1++;
+   }
+   else if(stream[i] == '0')
+   {
+        cnt0++;
+   }
+   else
+   {
+        iCnt++;
+   }
+}
+
+printf("\\n No. of Bits: %d", size);
+printf("\\n No. of 1s Bits: %d", cnt1);
+printf("\\n No. of 0s Bits: %d", cnt0);
+printf("\\n No. of Invalid Bits: %d", iCnt);
+
+return 0;
+}
+`;
+
+
+const CHARCNT = `
+#include <stdio.h>
+#include <string.h>
+ 
+int main()
+{
+   char string[100];
+   int c = 0, count[26] = {0}, x;
+ 
+   printf("Enter a string\\n");
+   gets(string);
+ 
+   while (string[c] != '\\0') {
+   /** Considering characters from 'a' to 'z' only and ignoring others. */
+ 
+      if (string[c] >= 'a' && string[c] <= 'z') {
+         x = string[c] - 'a';
+         count[x]++;
+      }
+ 
+      c++;
+   }
+ 
+   for (c = 0; c < 26; c++)
+         printf("%c occurs %d times in the string.\\n", c + 'a', count[c]);
+ 
+   return 0;
+}
+`;
+
+const PIPE = `
+#include<stdio.h>
+#include<string.h>
+
+void main()
+{
+
+	int n;
+	char buff[1024];
+	int flag[2];
+	char *data="hello how are you";	
+	pipe(flag);
+	
+	write(flag[1],data,strlen(data));
+
+	n=read(flag[0],buff,1024);
+	int i;
+	
+	for(i=0;i<strlen(buff);i++)
+	{
+		printf("%c",buff[i]);
+	 		
+	}
+	printf("\\n");
+	
+}
+`;
+
 const TOKEN = `
 #include <stdio.h>
 #include <stdbool.h>
